@@ -1,84 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Posty</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Document</title>
-    <style>
-        .header {
-            padding: 14px;
-            background-color: #c4c4c4;
-        }
-        .header h3 {
-            margin: auto !important;
-        }
-        ul {
-            display: flex;
-            justify-content: flex-end;
-            margin: auto !important;
-        }
-        li {
-            list-style-type: none;
-            padding: 0 10px;
-            font-size: 20px;
-            cursor: pointer;
-            color: rgb(94, 0, 0);
-        }
-        li:hover {
-            color: #0d6efd;
-        }
-        a {
-            text-decoration: none;
-            color:rgb(94, 0, 0);
-        }
-        a:hover {
-            color: :#0d6efd;
-        }
-        .content-wrapper {
-            display: flex;
-            justify-content:center;
-            max-width: 1200px;
-            margin: auto !important;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="row header">
-        <div class="col-6">
-            <ul>
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    </head>
+    <body class="bg-gray-200">
+        <nav class="p-6 bg-white flex justify-between mb-6">
+            <ul class="flex items-center">
                 <li>
-                    <a href="{{route('posts')}}">Posts</a>
+                    <a href="/" class="p-3">Home</a>
                 </li>
-                <li>Contact Us</li>
+                <li>
+                    <a href="{{ route('dashboard') }}" class="p-3">Dashboard</a>
+                </li>
+                <li>
+                    <a href="{{ route('posts') }}" class="p-3">Posts</a>
+                </li>
             </ul>
-        </div>
-        <ul class="col-6">
-                @auth
-                <li>
-                    <a href="">Badar Abdullah</a>
-                </li>
-                <li>
-                    <a>Logout</a>
-                </li>
-                @endauth
-                @guest
-                <li>
-                    <a>Login User</a>
-                </li>
-                <li>
-                    <a href="{{route('register')}}">Register User</a>
-                </li>
-                @endguest
-                
-        </ul>
-    </div>
-    <div class="content-wrapper">
-        @yield('content')
-    </div>
-</body>
 
+            <ul class="flex items-center">
+                @auth
+                    <li>
+                        <a href="" class="p-3">{{ auth()->user()->name }}</a>
+                    </li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="post" class="p-3 inline">
+                            @csrf
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
+                @endauth
+
+                @guest
+                    <li>
+                        <a href="{{ route('login') }}" class="p-3">Login</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('register') }}" class="p-3">Register</a>
+                    </li>
+                @endguest
+            </ul>
+        </nav>
+        @yield('content')
+    </body>
 </html>
